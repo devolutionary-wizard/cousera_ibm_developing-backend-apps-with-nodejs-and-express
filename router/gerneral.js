@@ -6,9 +6,12 @@ const publicUsersRouter = express.Router();
 
 // Register a new user
 publicUsersRouter.post("/register", (req, res) => {
-    const { userName, passWord } = req.body;
-    if (isValid(userName) && passWord) {
-        users.push({ userName, passWord });
+    const { username, password } = req.body;
+    if (!username || !password) {
+        return res.status(400).json({ message: "Username or password missing" });
+    }
+    if (isValid(username) && password) {
+        users.push({ username, password });
         return res.status(200).json({ message: "User successfully created" });
     }
     return res.status(400).json({ message: "Invalid username or password" });
@@ -21,7 +24,9 @@ publicUsersRouter.get('/', (req, res) => {
 
 // Route to get book details based on ISBN
 publicUsersRouter.get('/isbn/:isbn', (req, res) => {
-    const foundBook = books[req.params.isbn];
+    const foundBook = Object.values(books).filter(book => book.isbn === req.params.isbn);
+    return res.status(404).json(foundBook);
+
     if (foundBook) {
         return res.status(200).json(foundBook);
     }
@@ -48,7 +53,7 @@ publicUsersRouter.get('/title/:title', (req, res) => {
 
 // Route to get book review based on ISBN
 publicUsersRouter.get('/review/:isbn', (req, res) => {
-    const foundReview = books[req.params.isbn]?.reviews;
+    const foundReview = Object.values(books).find(book => book.isbn === req.params.isbn).reviews;
     if (foundReview) {
         return res.status(200).json(foundReview);
     }
