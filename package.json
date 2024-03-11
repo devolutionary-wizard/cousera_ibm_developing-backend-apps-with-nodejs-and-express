@@ -1,0 +1,18 @@
+{
+  "name": "couseral_ibm_assignment",
+  "version": "1.0.0",
+  "description": "RESTful API for managing a bookstore or online bookshop",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "SEANGLAY",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.3",
+    "express-session": "^1.18.0",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.0"
+  }
+}
